@@ -28,6 +28,8 @@ main {
 
 /* --- Header --- */
 header {
+    position: relative;
+    z-index: 1000;
     background-color: var(--primary-color);
     color: white;
     padding: 1rem 2rem;
@@ -644,24 +646,31 @@ nav a:hover {
 @media (max-width: 768px) {
     #btn-mobile {
         display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.8rem;
+        cursor: pointer;
     }
 
     #menu {
         display: none;
         position: absolute;
-        top: 60px;
-        right: 0;
+        top: 100%;
+        left: 0;
         width: 100%;
         background-color: var(--primary-color);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     #menu.active {
         display: block;
     }
 
-    nav ul {
+    #menu ul {
         flex-direction: column;
-        gap: 0;
+        padding: 1rem 0;
+        gap: 10px;
     }
 
     nav a {
