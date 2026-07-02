@@ -6,7 +6,7 @@ export const inicializarMenu = () => {
         btnMobile.addEventListener('click', () => {
             menu.classList.toggle('active');
             const isActive = menu.classList.contains('active');
-            btnMobile.setAttribute('aria-expanded', isActive);
+            btnMobile.setAttribute('aria-expanded', String(isActive));
         });
     }
 };

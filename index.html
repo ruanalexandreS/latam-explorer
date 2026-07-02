@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Latam Explorer - A sua plataforma completa para descobrir destinos inacreditáveis, guias de viagem e utilitários financeiros para toda a América Latina.">
-    <title>Latam Explorer | Descubra a América Latina</title>
+    <title>Latam Explorer</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <header>
-        <div class="logo">Latam Explorer</div>
-        <button id="btn-mobile" aria-label="Abrir Menu" aria-haspopup="true" aria-expanded="false">☰</button>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button id="btn-theme"
+                style="background:none; border:1px solid #ccc; padding:5px 10px; border-radius:15px; cursor:pointer;">🌙
+                Tema</button>
+            <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
+        </div>
         <nav id="menu">
             <ul>
                 <li><a href="index.html">Início</a></li>
@@ -25,15 +29,22 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero-section">
             <div class="hero-content">
                 <h1>Sua Jornada Pela América Latina Começa Aqui</h1>
                 <p>Explore guias detalhados, cenários deslumbrantes e utilize nossas ferramentas exclusivas de conversão
                     para planejar seu roteiro perfeito.</p>
+
                 <div class="hero-buttons">
-                    <a href="destinos.html" class="btn btn-primary">Explorar Destinos</a>
-                    <a href="ferramentas.html" class="btn btn-secondary">Conversor de Moedas</a>
+                    <a href="destinos.html" class="btn btn-primary">
+                        Explorar Destinos
+                    </a>
+
+                    <a href="ferramentas.html" class="btn btn-secondary">
+                        Conversor de Moedas
+                    </a>
                 </div>
+            </div>
             </div>
         </section>
 

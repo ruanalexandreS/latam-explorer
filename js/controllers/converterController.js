@@ -19,13 +19,31 @@ export const inicializarConversor = () => {
     const labelTaxa = document.getElementById('label-taxa');
     const btnInverter = document.getElementById('btn-inverter');
 
-    if (!inputOrigem || !selectOrigem) return;
+    // Verifica elementos essenciais antes de adicionar listeners
+    if (!inputOrigem || !inputDestino || !selectOrigem || !selectDestino || !labelTaxa) return;
+
+    // --- NOVO: Resgata a última moeda salva ao carregar a ferramenta ---
+    const moedaSalva = localStorage.getItem('latam_moeda_destino');
+    if (moedaSalva) {
+        // Verifica se a moeda salva realmente existe nas opções do select para evitar erros
+        const opcaoExiste = Array.from(selectDestino.options).some(opt => opt.value === moedaSalva);
+        if (opcaoExiste) {
+            selectDestino.value = moedaSalva;
+        }
+    }
 
     // 1. Função de Cálculo em Tempo Real
     const calcular = () => {
         const valor = parseFloat(inputOrigem.value);
         const moedaDe = selectOrigem.value;
         const moedaPara = selectDestino.value;
+
+        // Protege contra moedas desconhecidas
+        if (!taxasEmBRL[moedaDe] || !taxasEmBRL[moedaPara]) {
+            labelTaxa.textContent = `-`;
+            inputDestino.value = "0.00";
+            return;
+        }
 
         // Atualiza a legenda de taxa comercial no topo
         const taxaDireta = (1 / taxasEmBRL[moedaDe]) * taxasEmBRL[moedaPara];
@@ -46,33 +64,43 @@ export const inicializarConversor = () => {
     // 2. Eventos que disparam o cálculo instantaneamente
     inputOrigem.addEventListener('input', calcular);
     selectOrigem.addEventListener('change', calcular);
-    selectDestino.addEventListener('change', calcular);
 
-    // 3. Botão Inverter Moedas
-    btnInverter.addEventListener('click', () => {
-        const tempMoeda = selectOrigem.value;
-        selectOrigem.value = selectDestino.value;
-        selectDestino.value = tempMoeda;
+    // --- NOVO: Salva no LocalStorage e calcula ao mudar a moeda destino ---
+    selectDestino.addEventListener('change', () => {
+        localStorage.setItem('latam_moeda_destino', selectDestino.value);
         calcular();
     });
+
+    // 3. Botão Inverter Moedas
+    if (btnInverter) {
+        btnInverter.addEventListener('click', () => {
+            const tempMoeda = selectOrigem.value;
+            selectOrigem.value = selectDestino.value;
+            selectDestino.value = tempMoeda;
+            calcular();
+        });
+    }
 
     // 4. Lógica Interativa do FAQ (Sanfona/Accordion)
     const botoesFaq = document.querySelectorAll('.faq-pergunta');
     botoesFaq.forEach(botao => {
         botao.addEventListener('click', () => {
             const item = botao.parentElement;
+            if (!item) return;
             const resposta = item.querySelector('.faq-resposta');
             const estaAtivo = item.classList.contains('active');
 
             // Fecha todos os outros antes de abrir o clicado
             document.querySelectorAll('.faq-item').forEach(el => {
                 el.classList.remove('active');
-                el.querySelector('.faq-resposta').style.maxHeight = null;
-                el.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
+                const r = el.querySelector('.faq-resposta');
+                const p = el.querySelector('.faq-pergunta');
+                if (r) r.style.maxHeight = null;
+                if (p) p.setAttribute('aria-expanded', 'false');
             });
 
             // Se não estava ativo, abre a resposta calculando a altura do texto
-            if (!estaAtivo) {
+            if (!estaAtivo && resposta) {
                 item.classList.add('active');
                 resposta.style.maxHeight = resposta.scrollHeight + "px";
                 botao.setAttribute('aria-expanded', 'true');
@@ -80,6 +108,6 @@ export const inicializarConversor = () => {
         });
     });
 
-    // Executa o primeiro cálculo ao abrir a página
+    // Executa o primeiro cálculo ao abrir a página (Já vai usar a moeda salva se houver)
     calcular();
 };

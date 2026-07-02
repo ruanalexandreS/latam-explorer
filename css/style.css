@@ -1,10 +1,27 @@
+/* ==========================================================================
+   1. VARIÁVEIS E TEMA (DARK MODE)
+   ========================================================================== */
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #e67e22;
     --bg-light: #f8f9fa;
     --text-dark: #333;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
 }
 
+/* --- Tema Dark Mode --- */
+[data-theme="dark"] {
+    --bg-light: #121212;
+    --text-dark: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --border-color: #333333;
+}
+
+
+/* ==========================================================================
+   2. BASE E LAYOUT GERAL
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -20,6 +37,7 @@ body {
     background-color: var(--bg-light);
     color: var(--text-dark);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 main {
@@ -37,6 +55,12 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-header {
+    text-align: center;
+    margin: 0 auto 2rem auto;
+    max-width: 800px;
 }
 
 .logo {
@@ -88,7 +112,8 @@ nav a:hover {
 
 .subtitulo {
     margin-bottom: 2rem;
-    color: #666;
+    color: var(--text-dark);
+    opacity: 0.7;
 }
 
 /* --- Hero Section (Início) --- */
@@ -105,8 +130,42 @@ nav a:hover {
     min-height: 60vh;
 }
 
+/* Container que envolve o conteúdo da página inicial (Estilo Parallax Fixo) */
+.hero-section {
+    background-image: url('https://images.openai.com/static-rsc-4/aBUroQYHBvQuEJxjXoneXDt2TBZSho1ijrZGRYrfNDwp98wpntPv3_xW5PpnB9-7lArK-gYWExbDPETE409_QKiV1glv_udfU5Fkt9Sl0cgHdOHsDJmwI2AS8d-G1NpppNFetw11tIo5Lnn2NF9FFMBXnlXUz7MyIWfqCzGX19a9FB4taNOyIcQQBI6swQQp?purpose=fullsize');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* Adiciona uma camada escura para o texto branco continuar legível */
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Container específico para o texto não ficar gigante em telas wide */
 .hero-content {
-    max-width: 700px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
 }
 
 .hero h1 {
@@ -121,6 +180,13 @@ nav a:hover {
     color: #e0e0e0;
 }
 
+/* Ajuste fino dos botões */
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
 .hero-buttons {
     display: flex;
     gap: 15px;
@@ -131,13 +197,14 @@ nav a:hover {
 /* --- Botões --- */
 .btn {
     display: inline-block;
-    padding: 0.8rem 1.8rem;
+    padding: 0.8rem 2rem;
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
     cursor: pointer;
     border: 2px solid transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary {
@@ -152,13 +219,21 @@ nav a:hover {
 
 .btn-secondary {
     background-color: transparent;
-    color: white;
     border-color: white;
+    color: white;
 }
 
 .btn-secondary:hover {
     background-color: white;
     color: var(--primary-color);
+}
+
+/* Ajuste fino dos botões */
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 /* --- Features Section --- */
@@ -173,374 +248,6 @@ nav a:hover {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     padding-bottom: 3rem;
-}
-
-.feature-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border-top: 4px solid var(--secondary-color);
-}
-
-.feature-card h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.feature-card p {
-    color: #666;
-    font-size: 0.95rem;
-}
-
-/* --- Filtros por País --- */
-.filtros-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 2rem;
-    justify-content: center;
-}
-
-.btn-filtro {
-    background-color: white;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-filtro:hover,
-.btn-filtro.active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* --- Grid de Destinos --- */
-.grid-destinos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-/* --- Cards --- */
-.card {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    background-color: #ddd;
-}
-
-.card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-content h3 {
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.card-content p {
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
-    color: #555;
-    flex-grow: 1;
-}
-
-.btn-link {
-    text-decoration: none;
-    color: var(--secondary-color);
-    font-weight: bold;
-    align-self: flex-start;
-}
-
-/* --- Página de Ferramentas (Conversor Antigo) --- */
-.card-ferramenta {
-    max-width: 550px;
-    margin: 3rem auto;
-    background: white;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    border-top: 5px solid var(--secondary-color);
-}
-
-.card-ferramenta h2 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    font-size: 1.6rem;
-}
-
-.card-ferramenta .subtitulo {
-    font-size: 0.95rem;
-    color: #666;
-    margin-bottom: 2rem;
-}
-
-.card-ferramenta .btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-}
-
-/* --- Caixa de Resultado Dinâmica --- */
-.box-resultado {
-    margin-top: 1.5rem;
-    padding: 1.2rem;
-    background-color: #f0f7f4;
-    border-left: 4px solid #27ae60;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.box-resultado p {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0;
-}
-
-/* --- Novo Conversor (Estilo Wise) --- */
-.card-ferramenta-moderno {
-    max-width: 520px;
-    margin: 2rem auto 4rem auto;
-    background: white;
-    padding: 2rem;
-    border-radius: 24px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eaeaea;
-}
-
-.taxa-info {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-.taxa-info p {
-    font-weight: bold;
-    color: #1a8d44;
-    font-size: 1.05rem;
-    margin-top: 0.2rem;
-}
-
-.input-moeda-box {
-    background-color: #f7f7f7;
-    border: 1px solid #e0e0e0;
-    border-radius: 16px;
-    padding: 1rem 1.2rem;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.input-moeda-box:focus-within {
-    border-color: #1a8d44;
-    background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(26, 141, 68, 0.15);
-}
-
-.input-moeda-box label {
-    display: block;
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 0.4rem;
-    font-weight: 600;
-}
-
-.input-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.input-wrapper input {
-    border: none;
-    background: transparent;
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #2c3e50;
-    width: 60%;
-    outline: none;
-}
-
-.input-wrapper select {
-    border: none;
-    background-color: #e8ecef;
-    padding: 0.5rem 0.8rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #2c3e50;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.2s ease;
-}
-
-.input-wrapper select:hover {
-    background-color: #dde3e8;
-}
-
-.btn-inverter-wrapper {
-    display: flex;
-    justify-content: center;
-    margin: -12px 0;
-    position: relative;
-    z-index: 2;
-}
-
-.btn-inverter {
-    background-color: #aae5b8;
-    color: #1a8d44;
-    border: 3px solid white;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 1.3rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, background-color 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn-inverter:hover {
-    transform: rotate(180deg) scale(1.08);
-    background-color: #8ce09e;
-}
-
-/* --- FAQ (Perguntas Frequentes) --- */
-.faq-container {
-    max-width: 700px;
-    margin: 0 auto 4rem auto;
-}
-
-.faq-container h2 {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-    letter-spacing: -0.5px;
-}
-
-.faq-item {
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.faq-pergunta {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 1.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    cursor: pointer;
-}
-
-.faq-icone {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.faq-item.active .faq-icone {
-    transform: rotate(45deg);
-    background-color: #aae5b8;
-    color: #1a8d44;
-}
-
-.faq-resposta {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.faq-resposta p {
-    padding-bottom: 1.5rem;
-    color: #555;
-    line-height: 1.6;
-    font-size: 0.95rem;
-}
-
-/* --- Formulários (Contato e Conversor) --- */
-.contato-form {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-    font-size: 0.95rem;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.85rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-family: inherit;
-    background-color: #fafafa;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
-    background-color: white;
 }
 
 /* --- Footer Moderno --- */
@@ -642,8 +349,435 @@ nav a:hover {
     color: #88929b;
 }
 
-/* --- Responsividade (Mobile) --- */
+
+/* ==========================================================================
+   3. COMPONENTES (CARDS, MODAIS E TOASTS)
+   ========================================================================== */
+
+/* --- Features / Cards de Destaque --- */
+.feature-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--secondary-color);
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    opacity: 0.7;
+}
+
+/* --- Filtros por País --- */
+.filtros-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.btn-filtro {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-filtro:hover,
+.btn-filtro.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Grid e Cards de Destinos --- */
+.grid-destinos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #ddd;
+}
+
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.card-content p {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    flex-grow: 1;
+}
+
+.btn-link {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+/* --- Ferramentas (Conversor Antigo) --- */
+.card-ferramenta {
+    max-width: 550px;
+    margin: 3rem auto;
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-top: 5px solid var(--secondary-color);
+}
+
+.card-ferramenta h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+}
+
+.card-ferramenta .subtitulo {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.card-ferramenta .btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.box-resultado {
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    background-color: #f0f7f4;
+    border-left: 4px solid #27ae60;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.box-resultado p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* --- Novo Conversor (Estilo Wise) --- */
+.card-ferramenta-moderno {
+    max-width: 520px;
+    margin: 2rem auto 4rem auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+.taxa-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+.taxa-info p {
+    font-weight: bold;
+    color: #1a8d44;
+    font-size: 1.05rem;
+    margin-top: 0.2rem;
+}
+
+.input-moeda-box {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.input-moeda-box:focus-within {
+    border-color: #1a8d44;
+    background-color: var(--card-bg);
+    box-shadow: 0 0 0 3px rgba(26, 141, 68, 0.15);
+}
+
+.input-moeda-box label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-wrapper input {
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    width: 60%;
+    outline: none;
+}
+
+.input-wrapper select {
+    border: none;
+    background-color: var(--bg-light);
+    padding: 0.5rem 0.8rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+}
+
+.input-wrapper select:hover {
+    background-color: var(--border-color);
+}
+
+.btn-inverter-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: -12px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-inverter {
+    background-color: #aae5b8;
+    color: #1a8d44;
+    border: 3px solid var(--card-bg);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-inverter:hover {
+    transform: rotate(180deg) scale(1.08);
+    background-color: #8ce09e;
+}
+
+/* --- FAQ --- */
+.faq-container {
+    max-width: 700px;
+    margin: 0 auto 4rem auto;
+}
+
+.faq-container h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.faq-pergunta {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.faq-icone {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.faq-item.active .faq-icone {
+    transform: rotate(45deg);
+    background-color: #aae5b8;
+    color: #1a8d44;
+}
+
+.faq-resposta {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-resposta p {
+    padding-bottom: 1.5rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* --- Formulários --- */
+.contato-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+    background-color: var(--card-bg);
+}
+
+/* --- Modal / Lightbox --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+    max-width: 500px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+
+.btn-fechar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
+
+/* ==========================================================================
+   4. RESPONSIVIDADE (MOBILE)
+   ========================================================================== */
 @media (max-width: 768px) {
+
+    /* Base Mobile */
     #btn-mobile {
         display: block;
         background: none;
@@ -703,6 +837,31 @@ nav a:hover {
         text-align: center;
     }
 
+    .footer-moderno {
+        padding: 2.5rem 1rem 1rem 1rem;
+        margin-top: 2rem;
+    }
+
+    .footer-container {
+        gap: 1.8rem;
+        padding-bottom: 2rem;
+    }
+
+    .footer-col {
+        text-align: center;
+        align-items: center;
+    }
+
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-col ul li a:hover {
+        padding-left: 0;
+    }
+
+    /* Componentes Mobile */
     .card-ferramenta {
         margin: 1rem 0;
         padding: 1.5rem 1rem;
@@ -739,29 +898,5 @@ nav a:hover {
 
     .faq-pergunta {
         font-size: 0.95rem;
-    }
-
-    .footer-moderno {
-        padding: 2.5rem 1rem 1rem 1rem;
-        margin-top: 2rem;
-    }
-
-    .footer-container {
-        gap: 1.8rem;
-        padding-bottom: 2rem;
-    }
-
-    .footer-col {
-        text-align: center;
-        align-items: center;
-    }
-
-    .footer-col h4::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .footer-col ul li a:hover {
-        padding-left: 0;
     }
 }
