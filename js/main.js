@@ -1,10 +1,8 @@
-import { inicializarConversor } from './controllers/converterController.js';
+import { inicializarConversor, inicializarFaq } from './controllers/converterController.js';
 import { inicializarMenu } from './controllers/menuController.js';
 import { inicializarContato } from './controllers/contactController.js';
 import { inicializarDestinos } from './controllers/destinationsController.js';
 import { inicializarTema } from './controllers/themeController.js';
-import { inicializarConversor, inicializarFaq } from './controllers/converterController.js';
-
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -12,9 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     inicializarMenu();
     inicializarTema();
 
-    // Página Ferramentas: conversor de moedas
+    // Página Ferramentas: conversor de moedas + FAQ
     if (document.getElementById('valorOrigem')) {
         inicializarConversor();
+    }
+
+    if (document.querySelector('.faq-pergunta')) {
+        inicializarFaq();
     }
 
     // Página Contato: formulário
@@ -25,10 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Página Destinos: grid + filtros + modal
     if (document.getElementById('grid-destinos')) {
         inicializarDestinos();
-    }
-
-    if (document.querySelector('.faq-pergunta')) {
-        inicializarFaq();
     }
 
 });

@@ -31,7 +31,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-light);
     color: var(--text-dark);
@@ -43,10 +42,12 @@ main {
     flex-grow: 1;
 }
 
-/* --- Header --- */
-header {
+/* --- Header / Navbar --- */
+/* Cobre tanto <header> quanto <header class="navbar"> */
+header,
+.navbar {
     position: relative;
-    z-index: 1000;
+    z-index: 1100;
     background-color: var(--primary-color);
     color: white;
     padding: 1rem 2rem;
@@ -62,6 +63,7 @@ header {
     max-width: 800px;
 }
 
+/* --- Logo --- */
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -69,7 +71,7 @@ header {
     text-decoration: none;
 }
 
-/* --- Menu de Navegação (Desktop) --- */
+/* --- Nav Desktop --- */
 nav ul {
     list-style: none;
     display: flex;
@@ -88,29 +90,33 @@ nav a {
     transition: background-color 0.3s ease;
 }
 
-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+nav a:hover,
+nav a.ativo {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* --- Botão Mobile (hambúrguer) --- */
+/* --- Botão Mobile (hamburguer) --- */
+/* Oculto no desktop, visivel so no mobile */
 #btn-mobile {
     display: none;
     background: none;
     color: white;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     cursor: pointer;
+    z-index: 1200;
 }
 
 /* --- Menu Lateral (gaveta) --- */
+/* BUG CORRIGIDO: display:none no desktop */
 .menu-lateral {
+    display: none;
     position: fixed;
     top: 0;
     right: -100%;
     width: 260px;
     height: 100vh;
     background: var(--primary-color);
-    display: flex;
     flex-direction: column;
     padding-top: 80px;
     transition: right 0.4s ease;
@@ -123,20 +129,20 @@ nav a:hover {
 }
 
 .menu-lateral ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu-lateral li {
     width: 100%;
 }
 
+/* BUG CORRIGIDO: estava display:none, links ficavam invisiveis */
 .menu-lateral a {
-    display: none;
+    display: block;
     width: 100%;
     padding: 16px 24px;
     color: white;
@@ -145,11 +151,12 @@ nav a:hover {
     transition: background 0.3s;
 }
 
-.menu-lateral a:hover {
-    background: rgba(255, 255, 255, 0.08);
+.menu-lateral a:hover,
+.menu-lateral a.ativo {
+    background: rgba(255, 255, 255, 0.12);
 }
 
-/* --- Botão de Tema (dentro do menu lateral) --- */
+/* --- Botao de Tema --- */
 .menu-item-tema {
     margin-top: 20px;
     padding: 20px;
@@ -164,7 +171,9 @@ nav a:hover {
     padding: 10px 15px;
     border-radius: 25px;
     cursor: pointer;
-    transition: 0.3s;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: background 0.3s, color 0.3s;
 }
 
 #btn-theme:hover {
@@ -185,11 +194,13 @@ nav a:hover {
     opacity: 0.7;
 }
 
-/* --- Hero Section (Início) --- */
+
+/* ==========================================================================
+   3. HERO
+   ========================================================================== */
 .hero {
-    background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('../assets/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)),
+        url('../assets/hero-bg.jpg') center / cover no-repeat;
     color: white;
     text-align: center;
     padding: 6rem 1rem;
@@ -199,14 +210,15 @@ nav a:hover {
     min-height: 60vh;
 }
 
+/* BUG CORRIGIDO: URL da OpenAI substituida por Unsplash (funciona sem login) */
 .hero-section {
-    background-image: url('https://images.openai.com/static-rsc-4/aBUroQYHBvQuEJxjXoneXDt2TBZSho1ijrZGRYrfNDwp98wpntPv3_xW5PpnB9-7lArK-gYWExbDPETE409_QKiV1glv_udfU5Fkt9Sl0cgHdOHsDJmwI2AS8d-G1NpppNFetw11tIo5Lnn2NF9FFMBXnlXUz7MyIWfqCzGX19a9FB4taNOyIcQQBI6swQQp?purpose=fullsize');
+    background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1600&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-blend-mode: overlay;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.55);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -218,32 +230,22 @@ nav a:hover {
 }
 
 .hero-content {
-    max-width: 600px;
+    max-width: 620px;
     margin: 0 auto;
 }
 
-.hero-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-}
-
-.hero-content p {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
+.hero-content h1,
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     line-height: 1.2;
 }
 
+.hero-content p,
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: 2rem;
-    color: #e0e0e0;
+    opacity: 0.9;
 }
 
 .hero-buttons {
@@ -253,7 +255,10 @@ nav a:hover {
     flex-wrap: wrap;
 }
 
-/* --- Botões --- */
+
+/* ==========================================================================
+   4. BOTOES
+   ========================================================================== */
 .btn {
     display: inline-block;
     padding: 0.8rem 2rem;
@@ -264,15 +269,19 @@ nav a:hover {
     cursor: pointer;
     border: 2px solid transparent;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    font-family: inherit;
 }
 
 .btn-primary {
     background-color: var(--secondary-color);
     color: white;
+    border-color: var(--secondary-color);
 }
 
 .btn-primary:hover {
     background-color: #d35400;
+    border-color: #d35400;
     transform: scale(1.05);
 }
 
@@ -287,7 +296,10 @@ nav a:hover {
     color: var(--primary-color);
 }
 
-/* --- Features Section --- */
+
+/* ==========================================================================
+   5. FEATURES / PAGINA INICIAL
+   ========================================================================== */
 .section-title {
     text-align: center;
     margin-bottom: 3rem;
@@ -301,7 +313,505 @@ nav a:hover {
     padding-bottom: 3rem;
 }
 
-/* --- Footer Moderno --- */
+.feature-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--secondary-color);
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    opacity: 0.7;
+}
+
+
+/* ==========================================================================
+   6. DESTINOS
+   ========================================================================== */
+
+/* --- Busca --- */
+.busca-container {
+    max-width: 500px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.busca-container input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-dark);
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.busca-container input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+}
+
+/* --- Filtros por Pais --- */
+.filtros-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.btn-filtro {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.btn-filtro:hover,
+.btn-filtro.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* --- Grid de Destinos --- */
+.grid-destinos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.grid-vazio {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--text-dark);
+    opacity: 0.6;
+    font-size: 1rem;
+}
+
+/* --- Cards de Destinos --- */
+.card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #ddd;
+    display: block;
+}
+
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-pais {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.card-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.card-content p {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    flex-grow: 1;
+    line-height: 1.5;
+}
+
+.btn-link {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+
+/* ==========================================================================
+   7. MODAL / LIGHTBOX
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+    max-width: 500px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+
+.btn-fechar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-pais-badge {
+    display: inline-block;
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+}
+
+.modal-divider {
+    margin: 1rem 0;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-descricao {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.modal-detalhes {
+    background: rgba(0, 0, 0, 0.04);
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+[data-theme="dark"] .modal-detalhes {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-detalhes p+p {
+    margin-top: 0.5rem;
+}
+
+
+/* ==========================================================================
+   8. CONVERSOR DE MOEDAS
+   ========================================================================== */
+.card-ferramenta-moderno {
+    max-width: 520px;
+    margin: 2rem auto 4rem auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+.taxa-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+.taxa-info p {
+    font-weight: bold;
+    color: #1a8d44;
+    font-size: 1.05rem;
+    margin-top: 0.3rem;
+    opacity: 1;
+}
+
+.input-moeda-box {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-moeda-box:focus-within {
+    border-color: #1a8d44;
+    background-color: var(--card-bg);
+    box-shadow: 0 0 0 3px rgba(26, 141, 68, 0.15);
+}
+
+.input-moeda-box label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-wrapper input {
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    width: 60%;
+    outline: none;
+    font-family: inherit;
+}
+
+.input-wrapper select {
+    border: none;
+    background-color: var(--bg-light);
+    padding: 0.5rem 0.8rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+}
+
+.input-wrapper select:hover {
+    background-color: var(--border-color);
+}
+
+.btn-inverter-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: -12px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-inverter {
+    background-color: #aae5b8;
+    color: #1a8d44;
+    border: 3px solid var(--card-bg);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-inverter:hover {
+    transform: rotate(180deg) scale(1.08);
+    background-color: #8ce09e;
+}
+
+
+/* ==========================================================================
+   9. FAQ
+   ========================================================================== */
+.faq-container {
+    max-width: 700px;
+    margin: 0 auto 4rem auto;
+}
+
+.faq-container h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.faq-pergunta {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.faq-icone {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.faq-item.active .faq-icone {
+    transform: rotate(45deg);
+    background-color: #aae5b8;
+    color: #1a8d44;
+}
+
+.faq-resposta {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.faq-resposta p {
+    padding-bottom: 1.5rem;
+    color: var(--text-dark);
+    opacity: 0.8;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+
+/* ==========================================================================
+   10. FORMULARIO DE CONTATO
+   ========================================================================== */
+.contato-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+    background-color: var(--card-bg);
+}
+
+.erro {
+    display: block;
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    min-height: 1.1rem;
+}
+
+.sucesso-msg {
+    display: none;
+    color: #27ae60;
+    font-weight: 600;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.sucesso-msg.visivel {
+    display: block;
+}
+
+
+/* ==========================================================================
+   11. FOOTER
+   ========================================================================== */
 .footer-moderno {
     background-color: var(--primary-color);
     color: #e0e0e0;
@@ -314,7 +824,7 @@ nav a:hover {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2.5rem;
     padding-bottom: 3rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -402,469 +912,41 @@ nav a:hover {
 
 
 /* ==========================================================================
-   3. COMPONENTES (CARDS, MODAIS E TOASTS)
-   ========================================================================== */
-
-/* --- Features / Cards de Destaque --- */
-.feature-card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border-top: 4px solid var(--secondary-color);
-}
-
-.feature-card h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.feature-card p {
-    color: var(--text-dark);
-    font-size: 0.95rem;
-    opacity: 0.7;
-}
-
-/* --- Filtros por País --- */
-.filtros-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 2rem;
-    justify-content: center;
-}
-
-.btn-filtro {
-    background-color: var(--card-bg);
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-filtro:hover,
-.btn-filtro.active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* --- Grid e Cards de Destinos --- */
-.grid-destinos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-.card {
-    background: var(--card-bg);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    background-color: #ddd;
-}
-
-.card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.card-content h3 {
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-
-.card-content p {
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
-    color: var(--text-dark);
-    opacity: 0.7;
-    flex-grow: 1;
-}
-
-.btn-link {
-    text-decoration: none;
-    color: var(--secondary-color);
-    font-weight: bold;
-    align-self: flex-start;
-}
-
-/* --- Ferramentas (Conversor Antigo) --- */
-.card-ferramenta {
-    max-width: 550px;
-    margin: 3rem auto;
-    background: var(--card-bg);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    border-top: 5px solid var(--secondary-color);
-}
-
-.card-ferramenta h2 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    font-size: 1.6rem;
-}
-
-.card-ferramenta .subtitulo {
-    font-size: 0.95rem;
-    margin-bottom: 2rem;
-}
-
-.card-ferramenta .btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-}
-
-.box-resultado {
-    margin-top: 1.5rem;
-    padding: 1.2rem;
-    background-color: #f0f7f4;
-    border-left: 4px solid #27ae60;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.box-resultado p {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0;
-}
-
-/* --- Novo Conversor (Estilo Wise) --- */
-.card-ferramenta-moderno {
-    max-width: 520px;
-    margin: 2rem auto 4rem auto;
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 24px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border-color);
-}
-
-.taxa-info {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-    opacity: 0.7;
-}
-
-.taxa-info p {
-    font-weight: bold;
-    color: #1a8d44;
-    font-size: 1.05rem;
-    margin-top: 0.2rem;
-}
-
-.input-moeda-box {
-    background-color: var(--bg-light);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1rem 1.2rem;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.input-moeda-box:focus-within {
-    border-color: #1a8d44;
-    background-color: var(--card-bg);
-    box-shadow: 0 0 0 3px rgba(26, 141, 68, 0.15);
-}
-
-.input-moeda-box label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--text-dark);
-    opacity: 0.7;
-    margin-bottom: 0.4rem;
-    font-weight: 600;
-}
-
-.input-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.input-wrapper input {
-    border: none;
-    background: transparent;
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: var(--text-dark);
-    width: 60%;
-    outline: none;
-}
-
-.input-wrapper select {
-    border: none;
-    background-color: var(--bg-light);
-    padding: 0.5rem 0.8rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--text-dark);
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.2s ease;
-}
-
-.input-wrapper select:hover {
-    background-color: var(--border-color);
-}
-
-.btn-inverter-wrapper {
-    display: flex;
-    justify-content: center;
-    margin: -12px 0;
-    position: relative;
-    z-index: 2;
-}
-
-.btn-inverter {
-    background-color: #aae5b8;
-    color: #1a8d44;
-    border: 3px solid var(--card-bg);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 1.3rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, background-color 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn-inverter:hover {
-    transform: rotate(180deg) scale(1.08);
-    background-color: #8ce09e;
-}
-
-/* --- FAQ --- */
-.faq-container {
-    max-width: 700px;
-    margin: 0 auto 4rem auto;
-}
-
-.faq-container h2 {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-    letter-spacing: -0.5px;
-}
-
-.faq-item {
-    border-bottom: 1px solid var(--border-color);
-}
-
-.faq-pergunta {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 1.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    cursor: pointer;
-}
-
-.faq-icone {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--bg-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.faq-item.active .faq-icone {
-    transform: rotate(45deg);
-    background-color: #aae5b8;
-    color: #1a8d44;
-}
-
-.faq-resposta {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.faq-resposta p {
-    padding-bottom: 1.5rem;
-    color: var(--text-dark);
-    opacity: 0.8;
-    line-height: 1.6;
-    font-size: 0.95rem;
-}
-
-/* --- Formulários --- */
-.contato-form {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-    font-size: 0.95rem;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.85rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 1rem;
-    font-family: inherit;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
-    background-color: var(--card-bg);
-}
-
-/* --- Modal / Lightbox --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    padding: 1rem;
-}
-
-.modal-overlay.active {
-    display: flex;
-}
-
-.modal-content {
-    background-color: var(--card-bg);
-    color: var(--text-dark);
-    max-width: 500px;
-    width: 100%;
-    border-radius: 12px;
-    padding: 2rem;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    max-height: 85vh;
-    overflow-y: auto;
-    border: 1px solid var(--border-color);
-}
-
-.btn-fechar-modal {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: var(--text-dark);
-    cursor: pointer;
-}
-
-
-/* ==========================================================================
-   4. RESPONSIVIDADE (MOBILE)
+   12. RESPONSIVIDADE (MOBILE)
    ========================================================================== */
 @media (max-width: 768px) {
 
-    /* --- Header --- */
-
-    .menu-lateral {
-        display: flex;
-        /* Ativado no mobile */
-    }
-
+    /* Exibe botao hamburguer */
     #btn-mobile {
         display: block;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.8rem;
-        cursor: pointer;
-        z-index: 1100;
     }
 
-    /* --- Hero --- */
+    /* Ativa menu lateral no mobile */
+    .menu-lateral {
+        display: flex;
+    }
+
+    /* Hero */
     .hero,
     .hero-section {
         min-height: auto;
-        padding: 4rem 1rem;
+        padding: 5rem 1.5rem;
+        background-attachment: scroll;
     }
 
-    .hero h1,
-    .hero-content h1 {
+    .hero-content h1,
+    .hero h1 {
         font-size: 1.9rem;
     }
 
-    .hero p,
-    .hero-content p {
+    .hero-content p,
+    .hero p {
         font-size: 1rem;
     }
 
     .hero-buttons {
         flex-direction: column;
-        width: 100%;
+        align-items: stretch;
     }
 
     .btn {
@@ -872,10 +954,39 @@ nav a:hover {
         text-align: center;
     }
 
-    /* --- Footer --- */
+    /* Grid destinos: 1 coluna */
+    .grid-destinos {
+        grid-template-columns: 1fr;
+    }
+
+    /* Conversor */
+    .card-ferramenta-moderno {
+        margin: 1rem 0 2rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .input-wrapper input {
+        width: 55%;
+        font-size: 1.3rem;
+    }
+
+    .input-wrapper select {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    /* FAQ */
+    .faq-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .faq-pergunta {
+        font-size: 0.95rem;
+    }
+
+    /* Footer */
     .footer-moderno {
         padding: 2.5rem 1rem 1rem;
-        margin-top: 2rem;
     }
 
     .footer-container {
@@ -894,38 +1005,5 @@ nav a:hover {
 
     .footer-col ul li a:hover {
         padding-left: 0;
-    }
-
-    /* --- Componentes --- */
-    .card-ferramenta,
-    .card-ferramenta-moderno {
-        margin: 1rem 0 2rem;
-        padding: 1.5rem 1rem;
-    }
-
-    .card-ferramenta h2 {
-        font-size: 1.3rem;
-    }
-
-    .box-resultado p {
-        font-size: 1rem;
-    }
-
-    .input-wrapper input {
-        width: 55%;
-        font-size: 1.3rem;
-    }
-
-    .input-wrapper select {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.6rem;
-    }
-
-    .faq-container h2 {
-        font-size: 1.4rem;
-    }
-
-    .faq-pergunta {
-        font-size: 0.95rem;
     }
 }
