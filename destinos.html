@@ -5,80 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Conheça os melhores destinos e roteiros para explorar pela América Latina.">
-    <title>Latam Explorer | Destinos</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Latam Explorer</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <header>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button id="btn-theme"
-                style="background:none; border:1px solid #ccc; padding:5px 10px; border-radius:15px; cursor:pointer;">🌙
-                Tema</button>
-            <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
-        </div>
-        <nav id="menu">
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="destinos.html" class="ativo">Destinos</a></li>
-                <li><a href="ferramentas.html">Ferramentas</a></li>
-                <li><a href="contato.html">Contato</a></li>
-            </ul>
-        </nav>
+    <header class="navbar">
+        <a href="index.html" class="logo">Latam Explorer</a>
+        <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
     </header>
+
+    <nav id="menu" class="menu-lateral">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="destinos.html" class="ativo">Destinos</a></li>
+            <li><a href="ferramentas.html">Ferramentas</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li class="menu-item-tema">
+                <button id="btn-theme">🌙 Modo Escuro</button>
+            </li>
+        </ul>
+    </nav>
 
     <main class="container">
         <section class="destinos-section">
             <div class="page-header">
                 <h1>Destinos em Destaque</h1>
-                <p>Explore roteiros culturais e paisagens inesquecíveis pela América Latina.</p>
+                <p class="subtitulo">Explore roteiros culturais e paisagens inesquecíveis pela América Latina.</p>
             </div>
 
-            <!-- Barra de Busca por Texto em Tempo Real -->
-            <div style="max-width: 500px; margin: 0 auto 1.5rem auto;">
-                <input type="text" id="input-busca" placeholder="🔍 Buscar por cidade, país ou descrição..."
-                    style="width: 100%; padding: 0.8rem 1.2rem; border-radius: 25px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-dark);">
+            <!-- Barra de Busca -->
+            <div class="busca-container">
+                <input type="text" id="input-busca" placeholder="🔍 Buscar por cidade, país ou descrição...">
             </div>
 
-            <!-- Barra de Filtros por País -->
+            <!-- Filtros por País -->
             <div id="filtros-paises" class="filtros-container"></div>
 
-            <!-- Grid de Destinos (Preenchido dinamicamente via JS) -->
+            <!-- Grid de Destinos (preenchido via JS) -->
             <div id="grid-destinos" class="grid-destinos"></div>
         </section>
     </main>
 
-    <!-- Estrutura do Modal / Lightbox -->
+    <!-- Modal / Lightbox -->
     <div id="modal-destino" class="modal-overlay">
         <div class="modal-content">
             <button id="btn-fechar-modal" class="btn-fechar-modal">&times;</button>
             <h2 id="modal-titulo"></h2>
-            <span id="modal-pais" style="color: var(--secondary-color); font-weight: bold;"></span>
-            <hr style="margin: 1rem 0; border: 0; border-top: 1px solid var(--border-color);">
-            <p id="modal-desc" style="margin-bottom: 1rem;"></p>
-            <div style="background: rgba(0,0,0,0.05); padding: 1rem; border-radius: 6px;">
+            <span id="modal-pais" class="modal-pais-badge"></span>
+            <hr class="modal-divider">
+            <p id="modal-desc" class="modal-descricao"></p>
+            <div class="modal-detalhes">
                 <p><strong>Roteiro Sugerido:</strong> <span id="modal-roteiro"></span></p>
-                <p style="margin-top: 0.5rem;"><strong>Estimativa Diária:</strong> <span id="modal-gasto"></span></p>
+                <p><strong>Estimativa Diária:</strong> <span id="modal-gasto"></span></p>
             </div>
         </div>
     </div>
 
     <footer class="footer-moderno">
         <div class="footer-container">
-            <!-- Coluna 1: Sobre -->
             <div class="footer-col">
                 <span class="footer-logo">Latam Explorer</span>
                 <p>A sua plataforma interativa para exploração cultural, planejamento financeiro e roteiros inteligentes
                     por toda a América Latina.</p>
             </div>
 
-            <!-- Coluna 2: Navegação Rápida -->
             <div class="footer-col">
                 <h4>Navegação</h4>
                 <ul>
@@ -89,7 +80,6 @@
                 </ul>
             </div>
 
-            <!-- Coluna 3: Destinos Populares -->
             <div class="footer-col">
                 <h4>Em Destaque</h4>
                 <ul>
@@ -100,7 +90,6 @@
                 </ul>
             </div>
 
-            <!-- Coluna 4: Projeto Acadêmico -->
             <div class="footer-col">
                 <h4>Sobre o Projeto</h4>
                 <p>Desenvolvido exclusivamente para fins acadêmicos na disciplina de Programação Front-End.</p>
@@ -108,7 +97,6 @@
             </div>
         </div>
 
-        <!-- Linha de Copyright -->
         <div class="footer-bottom">
             <p>&copy; 2026 Latam Explorer. Todos os direitos reservados. Projeto Universitário.</p>
         </div>

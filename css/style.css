@@ -10,7 +10,6 @@
     --border-color: #e0e0e0;
 }
 
-/* --- Tema Dark Mode --- */
 [data-theme="dark"] {
     --bg-light: #121212;
     --text-dark: #e0e0e0;
@@ -93,7 +92,7 @@ nav a:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* --- Botão Mobile --- */
+/* --- Botão Mobile (hambúrguer) --- */
 #btn-mobile {
     display: none;
     background: none;
@@ -101,6 +100,76 @@ nav a:hover {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+/* --- Menu Lateral (gaveta) --- */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 260px;
+    height: 100vh;
+    background: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    transition: right 0.4s ease;
+    z-index: 1000;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.25);
+}
+
+.menu-lateral.active {
+    right: 0;
+}
+
+.menu-lateral ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu-lateral li {
+    width: 100%;
+}
+
+.menu-lateral a {
+    display: none;
+    width: 100%;
+    padding: 16px 24px;
+    color: white;
+    text-decoration: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 0.3s;
+}
+
+.menu-lateral a:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* --- Botão de Tema (dentro do menu lateral) --- */
+.menu-item-tema {
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+#btn-theme {
+    width: 100%;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#btn-theme:hover {
+    background: white;
+    color: var(--primary-color);
 }
 
 /* --- Container Geral --- */
@@ -130,14 +199,12 @@ nav a:hover {
     min-height: 60vh;
 }
 
-/* Container que envolve o conteúdo da página inicial (Estilo Parallax Fixo) */
 .hero-section {
     background-image: url('https://images.openai.com/static-rsc-4/aBUroQYHBvQuEJxjXoneXDt2TBZSho1ijrZGRYrfNDwp98wpntPv3_xW5PpnB9-7lArK-gYWExbDPETE409_QKiV1glv_udfU5Fkt9Sl0cgHdOHsDJmwI2AS8d-G1NpppNFetw11tIo5Lnn2NF9FFMBXnlXUz7MyIWfqCzGX19a9FB4taNOyIcQQBI6swQQp?purpose=fullsize');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /* Adiciona uma camada escura para o texto branco continuar legível */
     background-blend-mode: overlay;
     background-color: rgba(0, 0, 0, 0.5);
     min-height: 100vh;
@@ -150,7 +217,6 @@ nav a:hover {
     text-align: center;
 }
 
-/* Container específico para o texto não ficar gigante em telas wide */
 .hero-content {
     max-width: 600px;
     margin: 0 auto;
@@ -178,13 +244,6 @@ nav a:hover {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     color: #e0e0e0;
-}
-
-/* Ajuste fino dos botões */
-.hero-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
 }
 
 .hero-buttons {
@@ -226,14 +285,6 @@ nav a:hover {
 .btn-secondary:hover {
     background-color: white;
     color: var(--primary-color);
-}
-
-/* Ajuste fino dos botões */
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
 }
 
 /* --- Features Section --- */
@@ -777,7 +828,13 @@ nav a:hover {
    ========================================================================== */
 @media (max-width: 768px) {
 
-    /* Base Mobile */
+    /* --- Header --- */
+
+    .menu-lateral {
+        display: flex;
+        /* Ativado no mobile */
+    }
+
     #btn-mobile {
         display: block;
         background: none;
@@ -785,45 +842,23 @@ nav a:hover {
         color: white;
         font-size: 1.8rem;
         cursor: pointer;
+        z-index: 1100;
     }
 
-    #menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--primary-color);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    #menu.active {
-        display: block;
-    }
-
-    #menu ul {
-        flex-direction: column;
-        padding: 1rem 0;
-        gap: 10px;
-    }
-
-    nav a {
-        display: block;
-        padding: 1rem;
-        text-align: center;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .hero {
+    /* --- Hero --- */
+    .hero,
+    .hero-section {
+        min-height: auto;
         padding: 4rem 1rem;
-        min-height: 50vh;
     }
 
-    .hero h1 {
-        font-size: 1.8rem;
+    .hero h1,
+    .hero-content h1 {
+        font-size: 1.9rem;
     }
 
-    .hero p {
+    .hero p,
+    .hero-content p {
         font-size: 1rem;
     }
 
@@ -837,14 +872,14 @@ nav a:hover {
         text-align: center;
     }
 
+    /* --- Footer --- */
     .footer-moderno {
-        padding: 2.5rem 1rem 1rem 1rem;
+        padding: 2.5rem 1rem 1rem;
         margin-top: 2rem;
     }
 
     .footer-container {
-        gap: 1.8rem;
-        padding-bottom: 2rem;
+        gap: 2rem;
     }
 
     .footer-col {
@@ -861,11 +896,11 @@ nav a:hover {
         padding-left: 0;
     }
 
-    /* Componentes Mobile */
-    .card-ferramenta {
-        margin: 1rem 0;
+    /* --- Componentes --- */
+    .card-ferramenta,
+    .card-ferramenta-moderno {
+        margin: 1rem 0 2rem;
         padding: 1.5rem 1rem;
-        border-radius: 8px;
     }
 
     .card-ferramenta h2 {
@@ -876,15 +911,9 @@ nav a:hover {
         font-size: 1rem;
     }
 
-    .card-ferramenta-moderno {
-        padding: 1.5rem 1rem;
-        margin: 1rem 0 2rem 0;
-        border-radius: 16px;
-    }
-
     .input-wrapper input {
-        font-size: 1.3rem;
         width: 55%;
+        font-size: 1.3rem;
     }
 
     .input-wrapper select {

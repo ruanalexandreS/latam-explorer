@@ -1,23 +1,27 @@
+// Aplicação imediata do tema salvo — evita flash branco ao carregar a página
+// Este bloco roda antes do DOMContentLoaded, por isso fica no topo do módulo
+const temaSalvo = localStorage.getItem('latam_theme') || 'light';
+document.documentElement.setAttribute('data-theme', temaSalvo);
+
+const ROTULOS = {
+    dark: '☀️ Modo Claro',
+    light: '🌙 Modo Escuro',
+};
+
 export const inicializarTema = () => {
     const btnTheme = document.getElementById('btn-theme');
-    const temaSalvo = localStorage.getItem('latam_theme');
 
-    // Aplica o tema imediatamente ao abrir a página
-    if (temaSalvo === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        if (btnTheme) btnTheme.textContent = '☀️ Claro';
-    }
+    if (!btnTheme) return;
 
-    btnTheme?.addEventListener('click', () => {
+    // Sincroniza o rótulo do botão com o tema já aplicado
+    btnTheme.textContent = ROTULOS[temaSalvo];
+
+    btnTheme.addEventListener('click', () => {
         const temaAtual = document.documentElement.getAttribute('data-theme');
-        if (temaAtual === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('latam_theme', 'light');
-            btnTheme.textContent = '🌙 Escuro';
-        } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('latam_theme', 'dark');
-            btnTheme.textContent = '☀️ Claro';
-        }
+        const novoTema = temaAtual === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', novoTema);
+        localStorage.setItem('latam_theme', novoTema);
+        btnTheme.textContent = ROTULOS[novoTema];
     });
 };

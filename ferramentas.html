@@ -6,34 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Latam Explorer - Descubra roteiros, cultura e ferramentas de viagens pela América Latina.">
-    <title>Latam Explorer | Ferramentas</title>
+    <title>Latam Explorer</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <header>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button id="btn-theme"
-                style="background:none; border:1px solid #ccc; padding:5px 10px; border-radius:15px; cursor:pointer;">🌙
-                Tema</button>
-            <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
-        </div>
-        <nav id="menu">
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="destinos.html">Destinos</a></li>
-                <li><a href="ferramentas.html">Ferramentas</a></li>
-                <li><a href="contato.html">Contato</a></li>
-            </ul>
-        </nav>
+    <!-- ✅ Header idêntico ao index.html -->
+    <header class="navbar">
+        <a href="index.html" class="logo">Latam Explorer</a>
+        <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
     </header>
 
+    <!-- ✅ Nav fora do header, mesma estrutura do index.html -->
+    <nav id="menu" class="menu-lateral">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="destinos.html">Destinos</a></li>
+            <li><a href="ferramentas.html">Ferramentas</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li class="menu-item-tema">
+                <button id="btn-theme">🌙 Modo Escuro</button>
+            </li>
+        </ul>
+    </nav>
+
     <main class="container">
+        <div class="page-header">
+            <h1>Ferramentas</h1>
+            <p class="subtitulo">Converta moedas e planeje seu orçamento para a viagem perfeita.</p>
+        </div>
+
         <!-- Card do Conversor Estilo Wise -->
         <section class="card-ferramenta-moderno">
             <div class="taxa-info">
                 <span>Taxa de câmbio comercial</span>
-                <p id="label-taxa">$1 BRL = 750,50 COP</p>
+                <p id="label-taxa">Carregando taxa...</p>
             </div>
 
             <div class="input-moeda-box">
@@ -48,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Botão Central de Inverter -->
             <div class="btn-inverter-wrapper">
                 <button id="btn-inverter" class="btn-inverter" aria-label="Inverter moedas">⇅</button>
             </div>
@@ -69,9 +75,9 @@
             </div>
         </section>
 
-        <!-- Seção FAQ (Perguntas Frequentes) -->
+        <!-- Seção FAQ -->
         <section class="faq-container">
-            <h2>PERGUNTAS FREQUENTES</h2>
+            <h2>Perguntas Frequentes</h2>
 
             <div class="faq-item">
                 <button class="faq-pergunta" aria-expanded="false">
@@ -79,9 +85,8 @@
                     <span class="faq-icone">+</span>
                 </button>
                 <div class="faq-resposta">
-                    <p>Você converte uma moeda para outra utilizando a nossa ferramenta acima. Basta digitar o valor
-                        desejado no campo "Quantia", escolher a moeda de origem e selecionar para qual moeda
-                        latino-americana deseja realizar o cálculo. O resultado aparecerá instantaneamente.</p>
+                    <p>Digite o valor no campo "Quantia", escolha a moeda de origem e selecione para qual moeda
+                        latino-americana deseja converter. O resultado aparecerá instantaneamente.</p>
                 </div>
             </div>
 
@@ -91,9 +96,8 @@
                     <span class="faq-icone">+</span>
                 </button>
                 <div class="faq-resposta">
-                    <p>A taxa de câmbio comercial é o ponto de referência do mercado financeiro sem margens ocultas ou
-                        taxas de corretagem aditivadas por casas de câmbio, permitindo que você planeje o orçamento real
-                        da sua viagem com maior precisão.</p>
+                    <p>A taxa comercial é o ponto de referência do mercado financeiro sem margens ocultas ou taxas de
+                        corretagem, permitindo que você planeje o orçamento real da sua viagem com maior precisão.</p>
                 </div>
             </div>
 
@@ -113,14 +117,12 @@
 
     <footer class="footer-moderno">
         <div class="footer-container">
-            <!-- Coluna 1: Sobre -->
             <div class="footer-col">
                 <span class="footer-logo">Latam Explorer</span>
                 <p>A sua plataforma interativa para exploração cultural, planejamento financeiro e roteiros inteligentes
                     por toda a América Latina.</p>
             </div>
 
-            <!-- Coluna 2: Navegação Rápida -->
             <div class="footer-col">
                 <h4>Navegação</h4>
                 <ul>
@@ -131,7 +133,6 @@
                 </ul>
             </div>
 
-            <!-- Coluna 3: Destinos Populares -->
             <div class="footer-col">
                 <h4>Em Destaque</h4>
                 <ul>
@@ -142,7 +143,6 @@
                 </ul>
             </div>
 
-            <!-- Coluna 4: Projeto Acadêmico -->
             <div class="footer-col">
                 <h4>Sobre o Projeto</h4>
                 <p>Desenvolvido exclusivamente para fins acadêmicos na disciplina de Programação Front-End.</p>
@@ -150,7 +150,6 @@
             </div>
         </div>
 
-        <!-- Linha de Copyright -->
         <div class="footer-bottom">
             <p>&copy; 2026 Latam Explorer. Todos os direitos reservados. Projeto Universitário.</p>
         </div>

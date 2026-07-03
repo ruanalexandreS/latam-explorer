@@ -1,44 +1,60 @@
 export const inicializarContato = () => {
     const form = document.getElementById('formContato');
+    const sucessoMsg = document.getElementById('sucesso-msg');
+
     if (!form) return;
 
-    form.addEventListener('submit', (evento) => {
-        evento.preventDefault(); // Impede o recarregamento da página
+    const campos = {
+        nome: document.getElementById('nome'),
+        email: document.getElementById('email'),
+        mensagem: document.getElementById('mensagem'),
+    };
 
-        let formValido = true;
-        const nome = document.getElementById('nome').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const mensagem = document.getElementById('mensagem').value.trim();
+    const erros = {
+        nome: document.getElementById('erro-nome'),
+        email: document.getElementById('erro-email'),
+        mensagem: document.getElementById('erro-mensagem'),
+    };
 
-        // Limpa erros anteriores
-        document.querySelectorAll('.erro').forEach(el => el.textContent = '');
-        document.getElementById('sucesso-msg').style.display = 'none';
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Validação de Nome (Mínimo 3 caracteres)
+    const limparErros = () => {
+        Object.values(erros).forEach(el => { if (el) el.textContent = ''; });
+        sucessoMsg?.classList.remove('visivel');
+    };
+
+    const validar = () => {
+        const nome = campos.nome?.value.trim() ?? '';
+        const email = campos.email?.value.trim() ?? '';
+        const mensagem = campos.mensagem?.value.trim() ?? '';
+
+        let valido = true;
+
         if (nome.length < 3) {
-            document.getElementById('erro-nome').textContent = 'Insira um nome válido.';
-            document.getElementById('erro-nome').style.color = 'red';
-            formValido = false;
+            if (erros.nome) erros.nome.textContent = 'Insira um nome válido (mínimo 3 caracteres).';
+            valido = false;
         }
 
-        // Validação de E-mail (Regex básico)
-        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regexEmail.test(email)) {
-            document.getElementById('erro-email').textContent = 'Insira um e-mail válido.';
-            document.getElementById('erro-email').style.color = 'red';
-            formValido = false;
+            if (erros.email) erros.email.textContent = 'Insira um e-mail válido.';
+            valido = false;
         }
 
-        // Validação de Mensagem (Mínimo 10 caracteres)
         if (mensagem.length < 10) {
-            document.getElementById('erro-mensagem').textContent = 'A mensagem deve ter pelo menos 10 caracteres.';
-            document.getElementById('erro-mensagem').style.color = 'red';
-            formValido = false;
+            if (erros.mensagem) erros.mensagem.textContent = 'A mensagem deve ter pelo menos 10 caracteres.';
+            valido = false;
         }
 
-        if (formValido) {
-            document.getElementById('sucesso-msg').style.display = 'block';
-            form.reset(); // Limpa os campos
+        return valido;
+    };
+
+    form.addEventListener('submit', (evento) => {
+        evento.preventDefault();
+        limparErros();
+
+        if (validar()) {
+            form.reset();
+            sucessoMsg?.classList.add('visivel');
         }
     });
 };
