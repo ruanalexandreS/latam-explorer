@@ -8,7 +8,10 @@ export const inicializarMenu = () => {
     const fechar = () => menu.classList.remove('active');
 
     // Abre/fecha ao clicar no botão hambúrguer
-    btnMenu.addEventListener('click', abrirFechar);
+    btnMenu.addEventListener('click', (evento) => {
+        evento.stopPropagation();
+        abrirFechar();
+    });
 
     // Fecha ao clicar em qualquer link do menu
     menu.querySelectorAll('a').forEach(link => {
