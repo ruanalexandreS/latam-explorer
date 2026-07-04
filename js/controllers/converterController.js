@@ -38,6 +38,9 @@ export const inicializarConversor = async () => {
         const taxaDireta = calcularConversao(1, moedaDe, moedaPara, taxas);
 
         if (taxaDireta === null) {
+            // Não deve ocorrer: obterTaxas() garante todas as moedas suportadas.
+            // Loga o par problemático e mantém a UI utilizável para nova troca.
+            console.warn(`Conversão indisponível para o par ${moedaDe} → ${moedaPara}. Taxas carregadas:`, taxas);
             labelTaxa.textContent = 'Taxa indisponível.';
             inputDestino.value = '';
             return;
@@ -63,7 +66,20 @@ export const inicializarConversor = async () => {
         calcular();
     });
 
+    // As listas de moedas dos dois selects não são iguais: antes de inverter,
+    // cria no select a option que estiver faltando (senão value viraria "")
+    const garantirOpcao = (select, opcao) => {
+        const existe = Array.from(select.options).some(opt => opt.value === opcao.value);
+        if (!existe) select.add(new Option(opcao.text, opcao.value));
+    };
+
     btnInverter?.addEventListener('click', () => {
+        const opcaoOrigem = selectOrigem.selectedOptions[0];
+        const opcaoDestino = selectDestino.selectedOptions[0];
+        if (!opcaoOrigem || !opcaoDestino) return;
+
+        garantirOpcao(selectOrigem, opcaoDestino);
+        garantirOpcao(selectDestino, opcaoOrigem);
         [selectOrigem.value, selectDestino.value] = [selectDestino.value, selectOrigem.value];
         calcular();
     });

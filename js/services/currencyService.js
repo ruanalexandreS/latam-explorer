@@ -13,6 +13,9 @@ const taxasFallback = {
     UYU: 7.80,
 };
 
+// Moedas que o projeto usa
+const moedasSuportadas = ['BRL', 'USD', 'EUR', 'ARS', 'CLP', 'COP', 'MXN', 'PEN', 'UYU'];
+
 // Cache em memória para não re-buscar a cada digitação
 let taxasEmCache = null;
 
@@ -26,20 +29,24 @@ export const obterTaxas = async () => {
 
         const dados = await resposta.json();
 
-        // Filtra apenas as moedas que o projeto usa
-        const moedasSuportadas = ['BRL', 'USD', 'EUR', 'ARS', 'CLP', 'COP', 'MXN', 'PEN', 'UYU'];
-        taxasEmCache = {};
+        // Monta o objeto de taxas garantindo TODAS as moedas suportadas:
+        // o que a API não trouxer é completado com o fallback
+        const taxas = {};
         for (const moeda of moedasSuportadas) {
-            if (dados.rates[moeda] !== undefined) {
-                taxasEmCache[moeda] = dados.rates[moeda];
+            if (typeof dados.rates?.[moeda] === 'number') {
+                taxas[moeda] = dados.rates[moeda];
+            } else {
+                console.warn(`Taxa de ${moeda} ausente na resposta da API. Usando valor de fallback.`);
+                taxas[moeda] = taxasFallback[moeda];
             }
         }
 
+        taxasEmCache = taxas;
         return taxasEmCache;
 
     } catch (erro) {
         console.warn("API de câmbio indisponível. Usando taxas de fallback.", erro);
-        taxasEmCache = taxasFallback;
+        taxasEmCache = { ...taxasFallback };
         return taxasEmCache;
     }
 };
