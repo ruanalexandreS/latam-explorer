@@ -12,20 +12,19 @@
 <body>
     <header class="navbar">
         <a href="index.html" class="logo">Latam Explorer</a>
+
+        <nav id="menu" class="menu-lateral">
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="destinos.html">Destinos</a></li>
+                <li><a href="ferramentas.html">Ferramentas</a></li>
+                <li><a href="contato.html" class="ativo">Contato</a></li>
+                <li class="menu-item-tema"><button id="btn-theme">🌙 Modo Escuro</button></li>
+            </ul>
+        </nav>
+
         <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
     </header>
-
-    <nav id="menu" class="menu-lateral">
-        <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="destinos.html">Destinos</a></li>
-            <li><a href="ferramentas.html">Ferramentas</a></li>
-            <li><a href="contato.html" class="ativo">Contato</a></li>
-            <li class="menu-item-tema">
-                <button id="btn-theme">🌙 Modo Escuro</button>
-            </li>
-        </ul>
-    </nav>
 
     <main class="container">
         <div class="page-header">
@@ -56,7 +55,7 @@
 
                 <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
 
-                <!-- Mensagem de sucesso controlada via JS (adicionar/remover classe .visivel) -->
+                <!-- Mensagem de sucesso controlada via JS -->
                 <p id="sucesso-msg" class="sucesso-msg"> Mensagem enviada com sucesso!</p>
             </form>
         </section>

@@ -11,21 +11,20 @@
 </head>
 
 <body>
-    <!-- header sem </header> duplicado -->
     <header class="navbar">
         <a href="index.html" class="logo">Latam Explorer</a>
 
-        <nav class="nav-desktop"> <!-- visível no desktop -->
+        <nav id="menu" class="menu-lateral">
             <ul>
-                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html" class="ativo">Início</a></li>
                 <li><a href="destinos.html">Destinos</a></li>
                 <li><a href="ferramentas.html">Ferramentas</a></li>
                 <li><a href="contato.html">Contato</a></li>
-                <li><button id="btn-theme">🌙 Modo Escuro</button></li>
+                <li class="menu-item-tema"><button id="btn-theme">🌙 Modo Escuro</button></li>
             </ul>
         </nav>
 
-        <button id="btn-mobile">☰</button> <!-- visível só no mobile -->
+        <button id="btn-mobile" aria-label="Abrir Menu">☰</button>
     </header>
 
     <main>
@@ -40,7 +39,6 @@
                     <a href="ferramentas.html" class="btn btn-secondary">Conversor de Moedas</a>
                 </div>
             </div>
-            <!-- </div> sobrando removido aqui -->
         </section>
 
         <section class="features container">
